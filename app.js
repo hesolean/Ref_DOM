@@ -1,7 +1,21 @@
-const Field = React.forwardRef(function(props, ref){
-    return <div className="form-group">
-        <input type="text" className="form-control" ref={ref}/>
-    </div>
+// const Field = React.forwardRef(function(props, ref){
+//     return <div className="form-group">
+//         <input type="text" className="form-control" ref={ref}/>
+//     </div>
+// })
+
+class Field extends React.component {
+    render() {
+        return <div className="form-group">
+            <label htmlFor="">{this.props.label}</label>
+                <input type="text" className="form-control" ref={this.props.forwardRef}/>
+            </div>
+    }
+}
+
+const FieldWithRef = React.forwardRef((props, ref) => {
+    return <Field forwardRef={ref} {...props}/>
+    //{...props} passe toutes les propriétés de React.forwardRef au composant Field
 })
 
 class Home extends React.Component {
@@ -20,7 +34,7 @@ class Home extends React.Component {
     render(){
         console.log(this.input)
         return <div>
-            <Field ref={this.input}/>
+            <FieldWithRef ref={this.input} label="demo"/>
             {/* <input type="text" ref={this.input}/> */}
             <button onClick={this.handleClick}>Tester</button>
         </div>
